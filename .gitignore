@@ -1,0 +1,55 @@
+## User-specific files
+.idea/
+.vscode/
+
+## Windows image file caches
+Thumbs.db
+ehthumbs.db
+
+## Windows Installer files
+*.cab
+*.msi
+*.msm
+*.msp
+
+## Windows Installer directories
+*/bin/
+*/obj/
+
+## User-specific files
+*.user
+*.userosscache
+*.suo
+*.userprefs
+
+## Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Dd]Release/
+[Dd]ebug/Tests/
+[Dd]Release/Tests/
+x64/
+x86/
+[Aa]rmeabi/
+[Aa]rmeabi-v7a/
+[Aa]rm64/
+
+## Windows Installer files
+*.cab
+*.msi
+*.msm
+*.msp
+
+## .NET Core
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+## Tye
+.tye/
+
+## VS for Mac
+.vscode/
+
+## ASP.NET Scaffolding
+ScaffoldingReadMe.txt
