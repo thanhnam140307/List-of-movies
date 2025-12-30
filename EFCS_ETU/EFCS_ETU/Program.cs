@@ -1,6 +1,4 @@
-﻿
-
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.Numerics;
 using System.Reflection;
@@ -35,11 +33,11 @@ public class Program
     public const string REMOVE_MOVIES_BY_RATING = "5";
     public const string SORT_MOVIES_BY_RATING = "6";
 
-
     public static void Main(string[] args)
     {
         //Retrieves an array of movies stored in a file
         Movie[] allMovies = ReadMoviesFromFile(MOVIES_FILE);
+        bool canEndProgram = false;
         bool canEnd = false;
 
         do
@@ -49,85 +47,77 @@ public class Program
             Console.WriteLine(" ");
             Console.WriteLine("Menu Options");
             Console.WriteLine("============");
-            Console.WriteLine("0) Quit");
-            Console.WriteLine("1) Add a movie");
-            Console.WriteLine("2) Remove a movie");
-            Console.WriteLine("3) List all movies");
-            Console.WriteLine("4) Erase a movies by year");
-            Console.WriteLine("5) Erase a movies by rating");
-            Console.WriteLine("6) Sort a movie by rating");
+            Console.WriteLine($"{QUIT}) Quit");
+            Console.WriteLine($"{ADD_MOVIE}) Add a movie");
+            Console.WriteLine($"{REMOVE_MOVIES_BY_INDEX}) Remove a movie");
+            Console.WriteLine($"{LIST_MOVIES}) List all movies");
+            Console.WriteLine($"{REMOVE_MOVIES_BY_YEAR}) Erase a movies by year");
+            Console.WriteLine($"{REMOVE_MOVIES_BY_RATING}) Erase a movies by rating");
+            Console.WriteLine($"{SORT_MOVIES_BY_RATING}) Sort a movie by rating");
             Console.WriteLine(" ");
             Console.Write("Your choice: ");
             string inputChoice = Console.ReadLine();
 
             do
             {
-                if (inputChoice == QUIT)
+                switch (inputChoice)
                 {
-                    canEnd = true;
-                    break;
-                }
+                    case QUIT:
+                        canEnd = true;
+                        canEndProgram = true;
+                        break;
 
-                else if (inputChoice == ADD_MOVIE)
-                {
-                    Movie newMovies = AddMovie();
-                    allMovies = AppendMovie(allMovies, newMovies);
-                    ClearChoice();
-                    break;
+                    case ADD_MOVIE:
+                        allMovies = AppendMovie(allMovies, AddMovie());
+                        ClearChoice();
+                        canEnd = true;
+                        break;
 
-                }
-                else if (inputChoice == REMOVE_MOVIES_BY_INDEX)
-                {
-                    ListMovies(allMovies);
-                    int index = InputIndex(allMovies);
-                    allMovies = RemoveMovie(allMovies, index);
-                    ClearChoice();
-                    break;
+                    case REMOVE_MOVIES_BY_INDEX:
+                        ListMovies(allMovies);
+                        allMovies = RemoveMovie(allMovies, InputIndex(allMovies));
+                        ClearChoice();
+                        canEnd = true;
+                        break;
 
-                }
-                else if (inputChoice == LIST_MOVIES)
-                {
-                    ListMovies(allMovies);
-                    ClearChoice();
-                    break;
+                    case LIST_MOVIES:
+                        ListMovies(allMovies);
+                        ClearChoice();
+                        canEnd = true;
+                        break;
 
-                }
-                else if (inputChoice == REMOVE_MOVIES_BY_YEAR)
-                {
-                    ListMovies(allMovies);
-                    int year = InputYear(allMovies);
-                    allMovies = RemoveMoviesByYear(allMovies, year);
-                    ClearChoice();
-                    break;
+                    case REMOVE_MOVIES_BY_YEAR:
+                        ListMovies(allMovies);
+                        allMovies = RemoveMoviesByYear(allMovies, InputYear(allMovies));
+                        ClearChoice();
+                        canEnd = true;
+                        break;
 
-                }
-                else if (inputChoice == REMOVE_MOVIES_BY_RATING)
-                {
-                    ListMovies(allMovies);
-                    int rating = InputRating(allMovies);
-                    allMovies = RemoveMoviesByRating(allMovies, rating);
-                    ClearChoice();
-                    break;
+                    case REMOVE_MOVIES_BY_RATING:
+                        ListMovies(allMovies);
+                        allMovies = RemoveMoviesByRating(allMovies, InputRating(allMovies));
+                        ClearChoice();
+                        canEnd = true;
+                        break;
 
-                }
-                else if (inputChoice == SORT_MOVIES_BY_RATING)
-                {
-                    allMovies = SortMoviesByRating(allMovies);
-                    ListMovies(allMovies);
-                    ClearChoice();
-                    break;
-                }
+                    case SORT_MOVIES_BY_RATING:
+                        allMovies = SortMoviesByRating(allMovies);
+                        ListMovies(allMovies);
+                        ClearChoice();
+                        canEnd = true;
+                        break;
 
-                else
-                {
-                    WriteError(INVALID_VALUE_MESSAGE);
-                    inputChoice = Console.ReadLine();
+                    default:
+                        WriteError(INVALID_VALUE_MESSAGE);
+                        inputChoice = Console.ReadLine();
+                        continue;
                 }
             }
-            while (true);
+            while (!canEnd);
         }
-        while (!canEnd);
+        while (!canEndProgram);
     }
+
     public static void PresentTitle(string title, string titleLine)
     {
         string barTitle = "";
